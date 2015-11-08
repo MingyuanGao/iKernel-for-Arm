@@ -1,0 +1,92 @@
+=-=-=-=-==-=-=-==-=-=-=-=-= iKernel for ARM =-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=
+
+iKernel, standing for Interface Kernel, is an exercice project to understand the
+interface between ARM SoCs and System Software like an OS kernel. In particular,
+a small OS kernel is developed from scratch on the Samsung S3C2410 ARM platform,
+which is simulated by the SkeEye full system emulator.
+
+The base code of iKernel was borrowed from the example OS kernel in a book titled
+"Writing an Embedded Operating System Step by Step." Also added to iKernel is the
+code learned from U-Boot, Linux and QEMU. 
+
+
+What I learned from this project
+================================
+
+From the perspective of ARM Architecture
+----------------------------------------
+- How to bring up an ARM CPU
+- How to configure and use the MMU in an ARM SoC 
+- How to configure and use the Timer in an ARM SoC
+- Interrupt Handling in ARM Architecture
+
+From the perspective of OS Kernel Development
+---------------------------------------------
+- Dynamic memory management based on buddy algorithm and slab 
+- A generic Device Driver Framework
+  Device driver implementation of a storage device (ramdisk)
+- A generic File System Framework
+  Implementation for romfs file system
+- A generic System Call Interface
+- Loading and running ELF user-space programs 
+- Process scheduling on ARM 
+
+
+Work in Progress
+================
+- When running out of memory, collect some unused memory from slab caches.
+- When running an ELF app, if the execution addr is not a valid addr, use page
+  mapping to handle this situcation.
+- Porting newlibc C library to iKernel
+
+
+Contents
+========
+  1. Setting up the Development Environment
+  2. Compiling the Kernel
+  3. Running the Kernel
+
+=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-==-=-=-==-=
+
+
+1. Setting up the Development Environment
+=========================================
+
+1.1 Install SkyEye
+------------------
+
+SkyEye is a multi-architecture, multi-core, and highly scalable hardware simulation 
+platform; it supports the system structure of ARM, Blackfin, Coldfire, PowerPC, 
+MIPS, SPARC and x86. 
+
+# In the top dir of SkyEye source code 
+$ ./configure
+$ make
+$ sudo make install
+
+1.2 Install Cross Tool Chain 
+----------------------------
+
+In this project, GCC ARM Embedded from Linaro is used.  
+$ sudo add-apt-repository ppa:terry.guo/gcc-arm-embedded
+$ sudo apt-get update
+$ sudo apt-get install gcc-arm-none-eabi
+
+1.3 Install Required Packages
+-----------------------------
+
+# Tools to manupilate romfs file system
+$ sudo apt-get install genromfs
+
+2. Compiling the Kernel
+=======================
+
+# In the top dir of kernel source code
+$ make
+
+3. Running the Kernel
+=====================
+
+# In the dir that stores the file "skyeye.conf"
+$ skyeye
+

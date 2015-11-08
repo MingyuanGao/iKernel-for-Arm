@@ -1,0 +1,19 @@
+# Patterns without slashes apply everywhere in this directory and below.
+
+# Ignore swp files
+*.swp
+
+# Ignore .DS_Store
+.DS_Store
+
+
+# Ignore individual object, list, bin and hrb files (under dir src) 
+# (*.o, *.elf, *.bin) 
+*.o
+*.elf
+*.bin
+
+# Ignore src/ramdisk.img src/romfs.img
+src/ramdisk.img
+src/romfs.img
+
